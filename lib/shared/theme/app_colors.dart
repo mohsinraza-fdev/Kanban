@@ -7,11 +7,15 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color primary;
   final Color secondary;
   final Color tertiary;
+  final Color text;
+  final Color surface;
 
   AppColors({
     required this.primary,
     required this.secondary,
     required this.tertiary,
+    required this.text,
+    required this.surface,
   });
 
   @override
@@ -19,11 +23,15 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? primary,
     Color? secondary,
     Color? tertiary,
+    Color? text,
+    Color? surface,
   }) {
     return AppColors(
       primary: primary ?? this.primary,
       secondary: secondary ?? this.secondary,
       tertiary: tertiary ?? this.tertiary,
+      text: text ?? this.text,
+      surface: surface ?? this.surface,
     );
   }
 
@@ -36,6 +44,8 @@ class AppColors extends ThemeExtension<AppColors> {
       primary: Color.lerp(primary, other.primary, t) ?? primary,
       secondary: Color.lerp(secondary, other.secondary, t) ?? secondary,
       tertiary: Color.lerp(tertiary, other.tertiary, t) ?? tertiary,
+      text: Color.lerp(text, other.text, t) ?? text,
+      surface: Color.lerp(surface, other.surface, t) ?? surface,
     );
   }
 }
