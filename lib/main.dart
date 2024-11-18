@@ -7,6 +7,7 @@ import 'package:kanban_app/app/service_locator.dart';
 import 'package:kanban_app/services/preference_service.dart';
 import 'package:kanban_app/shared/theme/app_theme.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:stacked_themes/stacked_themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('de')],
@@ -32,6 +34,7 @@ void main() async {
 }
 
 initialiseServices() async {
+  await ThemeManager.initialise();
   await locator<PreferenceService>().initialise();
 }
 
@@ -41,16 +44,32 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.light,
+    return ThemeBuilder(
+      defaultThemeMode: ThemeMode.light,
+      lightTheme: AppTheme.light,
       darkTheme: AppTheme.dark,
+      builder: (context, regularTheme, darkTheme, themeMode) {
+        switch (themeMode) {
+          case ThemeMode.light:
+            AppTheme.darkenStatusBar();
+            break;
+          default:
+            AppTheme.brightenStatusBar();
+        }
+        return MaterialApp(
+          title: 'Kanban',
+          theme: regularTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
+          debugShowCheckedModeBanner: false,
 
-      // Routing Config
-      navigatorObservers: [StackedService.routeObserver],
-      navigatorKey: StackedService.navigatorKey,
-      initialRoute: Routes.splashView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
+          // Routing Config
+          navigatorObservers: [StackedService.routeObserver],
+          navigatorKey: StackedService.navigatorKey,
+          initialRoute: Routes.splashView,
+          onGenerateRoute: StackedRouter().onGenerateRoute,
+        );
+      },
     );
   }
 }

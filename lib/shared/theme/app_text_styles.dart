@@ -10,4 +10,18 @@ class AppTextStyles {
         fontSize: 18,
         color: color,
       );
+
+  static TextStyle sb56(Color color) => TextStyle(
+        fontFamily: _primaryFontFamily,
+        fontWeight: FontWeight.w600,
+        fontSize: 56,
+        color: color,
+      );
+
+  static TextStyle b12(Color color) => TextStyle(
+        fontFamily: _primaryFontFamily,
+        fontWeight: FontWeight.w700,
+        fontSize: 12,
+        color: color,
+      );
 }

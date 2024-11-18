@@ -17,7 +17,7 @@ abstract class CoreView<T extends CoreViewModelBase> extends StackedView<T> {
   // Initialize
   @override
   void onViewModelReady(T viewModel) {
-    viewModel.initialize();
+    viewModel.initialise();
     super.onViewModelReady(viewModel);
   }
 }

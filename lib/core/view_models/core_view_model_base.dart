@@ -42,7 +42,7 @@ mixin CoreViewModelBase on ChangeNotifier {
     return focusNode;
   }
 
-  Future<void> initialize() async {}
+  FutureOr<void> initialise() async {}
 
   void _disposeTextEditingController(TextEditingController controller) {
     controller.dispose();
