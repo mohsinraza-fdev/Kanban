@@ -4,6 +4,8 @@ part 'task.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Task {
   final String id;
+
+  @JsonKey(name: 'project_id')
   final String projectId;
   final String content;
   final String description;

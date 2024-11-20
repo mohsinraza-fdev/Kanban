@@ -157,13 +157,15 @@ class AppButton extends StatelessWidget {
               ),
             ),
             if (isLoading)
-              Center(
-                child: SizedBox(
-                  width: _loadingSize,
-                  height: _loadingSize,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: _textColor(context),
+              Positioned.fill(
+                child: Center(
+                  child: SizedBox(
+                    width: _loadingSize,
+                    height: _loadingSize,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: _textColor(context),
+                    ),
                   ),
                 ),
               ),

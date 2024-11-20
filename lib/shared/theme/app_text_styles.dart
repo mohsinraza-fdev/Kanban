@@ -25,6 +25,13 @@ class AppTextStyles {
         color: color,
       );
 
+  static TextStyle r10(Color color) => TextStyle(
+        fontFamily: _primaryFontFamily,
+        fontWeight: FontWeight.w400,
+        fontSize: 10,
+        color: color,
+      );
+
   static TextStyle r12(Color color) => TextStyle(
         fontFamily: _primaryFontFamily,
         fontWeight: FontWeight.w400,
@@ -99,6 +106,27 @@ class AppTextStyles {
         fontFamily: _primaryFontFamily,
         fontWeight: FontWeight.w500,
         fontSize: 24,
+        color: color,
+      );
+
+  static TextStyle sb12(Color color) => TextStyle(
+        fontFamily: _primaryFontFamily,
+        fontWeight: FontWeight.w600,
+        fontSize: 12,
+        color: color,
+      );
+
+  static TextStyle sb14(Color color) => TextStyle(
+        fontFamily: _primaryFontFamily,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+        color: color,
+      );
+
+  static TextStyle sb16(Color color) => TextStyle(
+        fontFamily: _primaryFontFamily,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
         color: color,
       );
 

@@ -9,6 +9,8 @@ part of 'task_detail.dart';
 TaskDetail _$TaskDetailFromJson(Map<String, dynamic> json) => TaskDetail(
       id: json['id'] as String,
       projectId: json['projectId'] as String,
+      status: $enumDecode(_$TaskStatusEnumMap, json['status']),
+      durationInSeconds: (json['durationInSeconds'] as num).toInt(),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       dueAt: json['dueAt'] == null
           ? null
@@ -16,19 +18,17 @@ TaskDetail _$TaskDetailFromJson(Map<String, dynamic> json) => TaskDetail(
       completedAt: json['completedAt'] == null
           ? null
           : DateTime.parse(json['completedAt'] as String),
-      durationInSeconds: (json['durationInSeconds'] as num).toInt(),
-      status: $enumDecode(_$TaskStatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$TaskDetailToJson(TaskDetail instance) =>
     <String, dynamic>{
       'id': instance.id,
       'projectId': instance.projectId,
+      'status': _$TaskStatusEnumMap[instance.status]!,
+      'durationInSeconds': instance.durationInSeconds,
       'updatedAt': instance.updatedAt.toIso8601String(),
       'dueAt': instance.dueAt?.toIso8601String(),
       'completedAt': instance.completedAt?.toIso8601String(),
-      'durationInSeconds': instance.durationInSeconds,
-      'status': _$TaskStatusEnumMap[instance.status]!,
     };
 
 const _$TaskStatusEnumMap = {

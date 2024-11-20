@@ -181,21 +181,24 @@ class _AppInputFieldState extends State<AppInputField> {
             ),
             const SizedBox(height: 8),
           ],
-          Container(
-            height: _height(),
-            alignment: _alignment(),
-            padding: _padding(),
-            decoration: BoxDecoration(
-              color: _backgroundColor(),
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 12),
-              border: Border.all(
-                width: 1,
-                color: widget.focusNode.hasFocus
-                    ? AppTheme.colors(context).border
-                    : AppTheme.colors(context).border.withOpacity(0),
+          GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(widget.focusNode),
+            child: Container(
+              height: _height(),
+              alignment: _alignment(),
+              padding: _padding(),
+              decoration: BoxDecoration(
+                color: _backgroundColor(),
+                borderRadius: BorderRadius.circular(widget.borderRadius ?? 12),
+                border: Border.all(
+                  width: 1,
+                  color: widget.focusNode.hasFocus
+                      ? AppTheme.colors(context).border
+                      : AppTheme.colors(context).border.withOpacity(0),
+                ),
               ),
+              child: _fieldContents(),
             ),
-            child: _fieldContents(),
           ),
         ],
       ),
@@ -291,7 +294,7 @@ class _AppInputFieldState extends State<AppInputField> {
     if (widget.fieldType == AppInputFieldType.description) {
       return widget.height ?? 110;
     }
-    return 40;
+    return 48;
   }
 
   AlignmentGeometry? _alignment() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_app/shared/theme/app_text_styles.dart';
 import 'package:kanban_app/shared/theme/app_theme.dart';
+import 'package:kanban_app/shared/utils/ui_helpers.dart';
 import 'package:kanban_app/shared/widgets/app_button.dart';
 import 'package:kanban_app/shared/widgets/app_input_field.dart';
 
@@ -94,13 +95,13 @@ class _ModifyProjectBottomSheetState extends State<ModifyProjectBottomSheet> {
               ),
               const SizedBox(height: 20),
               AppButton.primary(
-                size: AppButtonSize.medium,
+                size: AppButtonSize.large,
                 width: double.maxFinite,
                 label: widget.id == null ? 'Create' : 'Update',
                 isLoading: isLoading,
                 onTap: () => _confirm(context),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: isKeyboardOpen(context) ? 24 : 40),
             ],
           ),
         ),

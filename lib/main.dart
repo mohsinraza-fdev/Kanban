@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kanban_app/app/router/router_config.router.dart';
 import 'package:kanban_app/app/service_locator.dart';
+import 'package:kanban_app/database/hive_service.dart';
 import 'package:kanban_app/network/api_client_kanban.dart';
 import 'package:kanban_app/services/preference_service.dart';
 import 'package:kanban_app/shared/theme/app_theme.dart';
@@ -36,8 +37,9 @@ void main() async {
 
 initialiseServices() async {
   await ThemeManager.initialise();
-  await locator<PreferenceService>().initialise();
   locator<ApiClientKanban>().initialise();
+  await locator<PreferenceService>().initialise();
+  await locator<HiveService>().initialise();
 }
 
 class MyApp extends StatelessWidget {

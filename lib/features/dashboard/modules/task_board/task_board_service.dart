@@ -78,13 +78,17 @@ class TaskBoardService with ListenableServiceMixin {
     String description = '',
     required TaskStatus status,
     DateTime? dueDate,
-    DateTime? completionDate,
   }) async {
     if (isBusyCreatingTasks || selectedProject == null) return;
     setBusyCreatingTasks(true);
     try {
-      final task =
-          await _taskBoardRepo.createTask(projectId: selectedProject!.id, content: content, description: description);
+      final task = await _taskBoardRepo.createTask(
+        projectId: selectedProject!.id,
+        content: content,
+        description: description,
+      );
+
+      final completionDate = status == TaskStatus.done ? DateTime.now() : null;
       final taskDetail = await _taskBoardRepo.saveTaskDetails(
         TaskDetail(
           id: task.id,
@@ -108,10 +112,10 @@ class TaskBoardService with ListenableServiceMixin {
   }
 
   // Update
-  bool _isBusyUpdatingTasks = false;
-  bool get isBusyUpdatingTasks => _isBusyUpdatingTasks;
-  setBusyUpdatingTasks(bool value) {
-    _isBusyUpdatingTasks = value;
+  bool _isBusyUpdatingTask = false;
+  bool get isBusyUpdatingTask => _isBusyUpdatingTask;
+  setBusyUpdatingTask(bool value) {
+    _isBusyUpdatingTask = value;
     notifyListeners();
   }
 
@@ -122,12 +126,20 @@ class TaskBoardService with ListenableServiceMixin {
     required TaskStatus status,
     required int duration,
     DateTime? dueDate,
-    DateTime? completionDate,
   }) async {
-    if (isBusyUpdatingTasks || selectedProject == null) return;
-    setBusyUpdatingTasks(true);
+    if (isBusyUpdatingTask || selectedProject == null) return;
+    setBusyUpdatingTask(true);
     try {
       final task = await _taskBoardRepo.updateTask(id: id, content: content, description: description);
+
+      final oldDetail = getDetailFromTask(task);
+      DateTime? completionDate;
+      if (status == TaskStatus.done && oldDetail.status != TaskStatus.done) {
+        completionDate = DateTime.now();
+      }
+      if (status == TaskStatus.done && oldDetail.status == TaskStatus.done) {
+        completionDate = oldDetail.completedAt;
+      }
       final taskDetail = await _taskBoardRepo.saveTaskDetails(
         TaskDetail(
           id: task.id,
@@ -146,11 +158,11 @@ class TaskBoardService with ListenableServiceMixin {
       _taskDetails.add(taskDetail);
     } catch (e) {
       if (e is! CancelledRequestException) {
-        setBusyUpdatingTasks(false);
+        setBusyUpdatingTask(false);
         rethrow;
       }
     }
-    setBusyUpdatingTasks(false);
+    setBusyUpdatingTask(false);
   }
 
   // Delete
@@ -177,6 +189,87 @@ class TaskBoardService with ListenableServiceMixin {
       }
     }
     setBusyDeletingTasks(false);
+  }
+
+  // Update Status
+  bool _isBusyUpdatingTaskStatus = false;
+  bool get isBusyUpdatingTaskStatus => _isBusyUpdatingTaskStatus;
+  setBusyUpdatingTaskStatus(bool value) {
+    _isBusyUpdatingTaskStatus = value;
+    notifyListeners();
+  }
+
+  updateTaskStatus({required Task task, required TaskStatus status}) async {
+    if (isBusyUpdatingTaskStatus || selectedProject == null) return;
+    setBusyUpdatingTaskStatus(true);
+    try {
+      final taskDetail = getDetailFromTask(task);
+      DateTime? completionDate;
+      if (status == TaskStatus.done && taskDetail.status != TaskStatus.done) {
+        completionDate = DateTime.now();
+      }
+      if (status == TaskStatus.done && taskDetail.status == TaskStatus.done) {
+        completionDate = taskDetail.completedAt;
+      }
+      final updatedTaskDetail = await _taskBoardRepo.saveTaskDetails(
+        TaskDetail(
+          id: taskDetail.id,
+          projectId: taskDetail.projectId,
+          status: status,
+          durationInSeconds: taskDetail.durationInSeconds,
+          updatedAt: DateTime.now(),
+          dueAt: taskDetail.dueAt,
+          completedAt: completionDate,
+        ),
+      );
+
+      int index = _taskDetails.indexOf(taskDetail);
+      _taskDetails.removeAt(index);
+      _taskDetails.insert(index, updatedTaskDetail);
+    } catch (e) {
+      if (e is! CancelledRequestException) {
+        setBusyUpdatingTaskStatus(false);
+        rethrow;
+      }
+    }
+    setBusyUpdatingTaskStatus(false);
+  }
+
+  // Update Duration
+  bool _isBusyUpdatingTaskDuration = false;
+  bool get isBusyUpdatingTaskDuration => _isBusyUpdatingTaskDuration;
+  setBusyUpdatingTaskDuration(bool value) {
+    _isBusyUpdatingTaskDuration = value;
+    notifyListeners();
+  }
+
+  updateTaskDuration({required Task task, required int duration}) async {
+    if (isBusyUpdatingTaskDuration || selectedProject == null) return;
+    setBusyUpdatingTaskDuration(true);
+    try {
+      final taskDetail = getDetailFromTask(task);
+      final updatedTaskDetail = await _taskBoardRepo.saveTaskDetails(
+        TaskDetail(
+          id: taskDetail.id,
+          projectId: taskDetail.projectId,
+          status: taskDetail.status,
+          durationInSeconds: duration,
+          updatedAt: DateTime.now(),
+          dueAt: taskDetail.dueAt,
+          completedAt: taskDetail.completedAt,
+        ),
+      );
+
+      int index = _taskDetails.indexOf(taskDetail);
+      _taskDetails.removeAt(index);
+      _taskDetails.insert(index, updatedTaskDetail);
+    } catch (e) {
+      if (e is! CancelledRequestException) {
+        setBusyUpdatingTaskDuration(false);
+        rethrow;
+      }
+    }
+    setBusyUpdatingTaskDuration(false);
   }
 
   clean() {
