@@ -27,9 +27,20 @@ class ModifyTaskBottomSheet extends CoreView<ModifyTaskViewModel> {
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    task == null ? "Create Task" : "Update Task",
-                    style: AppTextStyles.m18(AppTheme.colors(context).text),
+                  child: Row(
+                    children: [
+                      Text(
+                        task == null ? "Create Task" : "Update Task",
+                        style: AppTextStyles.m18(AppTheme.colors(context).text),
+                      ),
+                      const SizedBox(width: 8),
+                      if (task != null)
+                        AppButton.outline(
+                          size: AppButtonSize.small,
+                          label: 'View Comments',
+                          onTap: viewModel.openCommentsBottomSheet,
+                        ),
+                    ],
                   ),
                 ),
                 const SizedBox(width: 8),

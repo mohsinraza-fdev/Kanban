@@ -32,13 +32,11 @@ abstract class TaskBoardRepo {
   // Task Comments
   Future<List<TaskComment>> fetchComments({
     required String taskId,
-    required String projectId,
     CancelToken? cancelToken,
   });
 
   Future<TaskComment> createComment({
     required String taskId,
-    required String projectId,
     required String content,
     CancelToken? cancelToken,
   });

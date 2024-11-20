@@ -8,8 +8,7 @@ class TaskComment {
   @JsonKey(name: 'task_id')
   final String taskId;
 
-  @JsonKey(name: 'project_id')
-  final String projectId;
+  final String content;
 
   @JsonKey(name: 'posted_at')
   final DateTime postedAt;
@@ -17,7 +16,7 @@ class TaskComment {
   TaskComment({
     required this.id,
     required this.taskId,
-    required this.projectId,
+    required this.content,
     required this.postedAt,
   });
 

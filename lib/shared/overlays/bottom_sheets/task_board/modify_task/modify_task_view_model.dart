@@ -92,6 +92,14 @@ class ModifyTaskViewModel extends CoreReactiveViewModel {
     }
   }
 
+  openCommentsBottomSheet() {
+    _bottomSheetService.showTaskCommentsBottomSheet(
+      context!,
+      taskId: selectedTask!.id,
+      projectId: selectedTask!.projectId,
+    );
+  }
+
   @override
   FutureOr<void> initialise() {
     if (selectedTask != null) {

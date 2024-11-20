@@ -95,12 +95,11 @@ class TaskBoardRepoImpl implements TaskBoardRepo {
   @override
   Future<List<TaskComment>> fetchComments({
     required String taskId,
-    required String projectId,
     CancelToken? cancelToken,
   }) async {
     try {
       List resp = await _client.get<List>(
-        '${EndpointsKanban.comments}?task_id=$taskId&project_id=$projectId',
+        '${EndpointsKanban.comments}?task_id=$taskId',
         cancelToken: cancelToken,
       );
       return parseModel<List<TaskComment>>(() => resp.map((e) => TaskComment.fromJson(e)).toList());
@@ -112,7 +111,6 @@ class TaskBoardRepoImpl implements TaskBoardRepo {
   @override
   Future<TaskComment> createComment({
     required String taskId,
-    required String projectId,
     required String content,
     CancelToken? cancelToken,
   }) async {
@@ -121,7 +119,6 @@ class TaskBoardRepoImpl implements TaskBoardRepo {
         EndpointsKanban.comments,
         data: {
           "task_id": taskId,
-          "project_id": projectId,
           "content": content,
         },
         cancelToken: cancelToken,
