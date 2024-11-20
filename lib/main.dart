@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kanban_app/app/router/router_config.router.dart';
 import 'package:kanban_app/app/service_locator.dart';
+import 'package:kanban_app/network/api_client_kanban.dart';
 import 'package:kanban_app/services/preference_service.dart';
 import 'package:kanban_app/shared/theme/app_theme.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -36,6 +37,7 @@ void main() async {
 initialiseServices() async {
   await ThemeManager.initialise();
   await locator<PreferenceService>().initialise();
+  locator<ApiClientKanban>().initialise();
 }
 
 class MyApp extends StatelessWidget {
@@ -63,11 +65,16 @@ class MyApp extends StatelessWidget {
           themeMode: themeMode,
           debugShowCheckedModeBanner: false,
 
-          // Routing Config
+          // Routing Configs
           navigatorObservers: [StackedService.routeObserver],
           navigatorKey: StackedService.navigatorKey,
           initialRoute: Routes.splashView,
           onGenerateRoute: StackedRouter().onGenerateRoute,
+
+          // Localization Configs
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
         );
       },
     );

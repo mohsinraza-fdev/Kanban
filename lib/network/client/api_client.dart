@@ -10,7 +10,7 @@ abstract class ApiClient extends ApiClientBase {
   ApiClient(super.client);
 
   @override
-  Future<T?> get<T>(
+  Future<T> get<T>(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -46,7 +46,7 @@ abstract class ApiClient extends ApiClientBase {
   }
 
   @override
-  Future<T?> post<T>(String endpoint,
+  Future<T> post<T>(String endpoint,
       {dynamic data, Map<String, dynamic>? queryParameters, Options? options, CancelToken? cancelToken}) async {
     try {
       Response response = await client.post(
@@ -79,7 +79,7 @@ abstract class ApiClient extends ApiClientBase {
   }
 
   @override
-  Future<T?> put<T>(String endpoint,
+  Future<T> put<T>(String endpoint,
       {dynamic data, Map<String, dynamic>? queryParameters, Options? options, CancelToken? cancelToken}) async {
     try {
       Response response = await client.put(
@@ -112,7 +112,7 @@ abstract class ApiClient extends ApiClientBase {
   }
 
   @override
-  Future<T?> patch<T>(String endpoint,
+  Future<T> patch<T>(String endpoint,
       {dynamic data, Map<String, dynamic>? queryParameters, Options? options, CancelToken? cancelToken}) async {
     try {
       Response response = await client.patch(
@@ -144,7 +144,7 @@ abstract class ApiClient extends ApiClientBase {
   }
 
   @override
-  Future<T?> delete<T>(String endpoint,
+  Future<T> delete<T>(String endpoint,
       {dynamic data, Map<String, dynamic>? queryParameters, Options? options, CancelToken? cancelToken}) async {
     try {
       Response response = await client.delete(

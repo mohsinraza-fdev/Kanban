@@ -56,9 +56,12 @@ class AppTheme {
       text: const Color(0xFF000000),
       textTertiary: const Color(0xFF6F7277),
       surface: const Color(0xFFFFFFFF),
+      surfaceSecondary: const Color(0xFFF0F2F5),
       border: const Color(0xFFE5E5E5),
       inProgress: const Color(0xFFFFCD1C),
       done: const Color(0xFF02C94F),
+      success: const Color(0xFF02C94F),
+      critical: const Color(0xFFE11D48),
     );
   }
 
@@ -75,15 +78,18 @@ class AppTheme {
   // Dark Theme
   static AppColors get _darkThemeColors {
     return AppColors(
-      primary: const Color(0xFF8113F6),
+      primary: const Color.fromARGB(255, 39, 104, 255),
       secondary: const Color(0xFFA9ACB3),
       tertiary: const Color(0xFFCFD5E2),
       text: const Color(0xFFFFFFFF),
       textTertiary: const Color(0xFFA9ACB3),
       surface: const Color(0xFF202F49),
+      surfaceSecondary: const Color(0xFF35435A),
       border: const Color(0xFF36445B),
       inProgress: const Color(0xFFFFC904),
       done: const Color(0xFF00F85F),
+      success: const Color(0xFF00F85F),
+      critical: const Color(0xFFE11D48),
     );
   }
 

@@ -29,6 +29,9 @@ class NavBar extends CoreViewModelWidget<DashboardViewModel> {
           width: 1,
           color: AppTheme.colors(context).border,
         ),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(12),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,6 +39,7 @@ class NavBar extends CoreViewModelWidget<DashboardViewModel> {
           ...List.generate(icons.length, (index) {
             return NavItem(
               icon: icons[index],
+              isDisabled: viewModel.selectedProject == null && [1, 2].contains(index),
               isSelected: viewModel.selectedIndex == index,
               onTap: () => viewModel.setIndex(index),
             );

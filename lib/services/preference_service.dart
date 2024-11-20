@@ -8,11 +8,19 @@ class PreferenceService with ListenableServiceMixin {
     instance = await SharedPreferences.getInstance();
   }
 
+  String? get activeProjectId {
+    return instance.getString(PreferenceKeys.activeProjectId);
+  }
+
+  Future<bool> setActiveProjectId(String id) async {
+    return await instance.setString(PreferenceKeys.activeProjectId, id);
+  }
+
   Future<bool> clear() async {
     return await instance.clear();
   }
 }
 
 class PreferenceKeys {
-  static String get accessToken => 'access-token-key';
+  static String get activeProjectId => 'active-project-id-key';
 }
