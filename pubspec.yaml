@@ -60,6 +60,7 @@ dev_dependencies:
   json_serializable: ^6.8.0
   stacked_generator: ^1.6.1
   flutter_gen_runner:
+  mockito: ^5.4.4
   build_runner: ^2.4.13
 
   # The "flutter_lints" package below contains a set of recommended lints to
