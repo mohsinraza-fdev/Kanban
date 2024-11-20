@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kanban_app/app/service_locator.dart';
 import 'package:kanban_app/core/view_models/core_view.dart';
@@ -52,33 +51,6 @@ class SettingsView extends CoreView<SettingsViewModel> {
                       ),
                     ),
                     const SizedBox(height: 16),
-
-                    // Language
-                    CardShell(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Language',
-                            style: AppTextStyles.m18(
-                              AppTheme.colors(context).text,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          RadioButtonTile(
-                            title: 'English',
-                            isSelected: context.locale.languageCode == 'en',
-                            onTap: () => viewModel.updateLanguage('en'),
-                          ),
-                          const SizedBox(height: 12),
-                          RadioButtonTile(
-                            title: 'German',
-                            isSelected: context.locale.languageCode == 'de',
-                            onTap: () => viewModel.updateLanguage('de'),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),
