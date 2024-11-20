@@ -53,6 +53,8 @@ class TaskBoardService with ListenableServiceMixin {
       _tasks = tasks as List<Task>;
       _taskDetails =
           (taskDetails as List<TaskDetail>).where((detail) => detail.projectId == selectedProject?.id).toList();
+
+      _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {
         if (_tasks.isEmpty) {
@@ -102,6 +104,7 @@ class TaskBoardService with ListenableServiceMixin {
       );
       _tasks.add(task);
       _taskDetails.add(taskDetail);
+      _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {
         setBusyCreatingTasks(false);
@@ -156,6 +159,8 @@ class TaskBoardService with ListenableServiceMixin {
 
       _tasks.add(task);
       _taskDetails.add(taskDetail);
+
+      _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {
         setBusyUpdatingTask(false);
@@ -182,6 +187,8 @@ class TaskBoardService with ListenableServiceMixin {
 
       _tasks.removeWhere((t) => t.id == id);
       _taskDetails.removeWhere((td) => td.id == id);
+
+      _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {
         setBusyDeletingTasks(false);
@@ -226,6 +233,8 @@ class TaskBoardService with ListenableServiceMixin {
       int index = _taskDetails.indexOf(taskDetail);
       _taskDetails.removeAt(index);
       _taskDetails.insert(index, updatedTaskDetail);
+
+      _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {
         setBusyUpdatingTaskStatus(false);
@@ -263,6 +272,8 @@ class TaskBoardService with ListenableServiceMixin {
       int index = _taskDetails.indexOf(taskDetail);
       _taskDetails.removeAt(index);
       _taskDetails.insert(index, updatedTaskDetail);
+
+      _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {
         setBusyUpdatingTaskDuration(false);

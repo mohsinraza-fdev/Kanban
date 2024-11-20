@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kanban_app/app/service_locator.dart';
 import 'package:kanban_app/core/view_models/core_view.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/enums/task_status.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/task_board_view_model.dart';
@@ -51,7 +52,10 @@ class TaskBoardView extends CoreView<TaskBoardViewModel> {
   }
 
   @override
+  bool get disposeViewModel => false;
+
+  @override
   TaskBoardViewModel viewModelBuilder(BuildContext context) {
-    return TaskBoardViewModel();
+    return locator<TaskBoardViewModel>();
   }
 }

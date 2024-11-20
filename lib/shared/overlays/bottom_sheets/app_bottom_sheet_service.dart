@@ -5,6 +5,7 @@ import 'package:kanban_app/shared/overlays/bottom_sheets/common/deletion_confirm
 import 'package:kanban_app/shared/overlays/bottom_sheets/projects/modify_project_bottom_sheet.dart';
 import 'package:kanban_app/shared/overlays/bottom_sheets/task_board/modify_task/modify_task_bottom_sheet.dart';
 import 'package:kanban_app/shared/overlays/bottom_sheets/task_board/select_task_status/select_task_status_bottom_sheet.dart';
+import 'package:kanban_app/shared/overlays/bottom_sheets/timer_tracker/select_task_bottom_sheet.dart';
 import 'package:kanban_app/shared/theme/app_theme.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -82,6 +83,15 @@ class AppBottomSheetService {
           selectedStatus: status,
         ),
       ),
+    );
+  }
+
+  Future<Task?> showSelectTaskBottomSheet(BuildContext context) async {
+    return await showCupertinoModalBottomSheet<Task?>(
+      expand: true,
+      context: context,
+      backgroundColor: AppTheme.colors(context).surface,
+      builder: (context) => const SelectTaskBottomSheet(),
     );
   }
 }

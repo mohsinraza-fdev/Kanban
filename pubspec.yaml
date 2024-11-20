@@ -44,6 +44,8 @@ dependencies:
   skeletonizer: ^1.4.2
   modal_bottom_sheet: ^3.0.0
 
+  fl_chart: ^0.69.0
+
   json_annotation: ^4.9.0
 
 

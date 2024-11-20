@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:kanban_app/app/router/router_config.router.dart';
 import 'package:kanban_app/app/service_locator.dart';
 import 'package:kanban_app/core/view_models/core_reactive_view_model.dart';
+import 'package:kanban_app/features/dashboard/modules/task_board/enums/task_status.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/repository/models/task.dart';
+import 'package:kanban_app/features/dashboard/modules/task_board/repository/models/task_detail.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/task_board_service.dart';
 import 'package:kanban_app/features/projects/projects_service.dart';
 import 'package:kanban_app/features/projects/repository/models/project.dart';
@@ -29,6 +31,18 @@ class HomeViewModel extends CoreReactiveViewModel {
     return (tasks.isEmpty && isBusyFetchingTasks) || (projects.isEmpty && isBusyFetchingProjects);
   }
 
+  TaskDetail getDetailFromTask(Task task) {
+    return _taskBoardService.getDetailFromTask(task);
+  }
+
+  List<Task> getTasksByStatus(TaskStatus status) {
+    return _taskBoardService.tasks.where((task) => getDetailFromTask(task).status == status).toList();
+  }
+
+  createTask() {
+    _bottomSheetService.showModifyTaskBottomSheet(context!);
+  }
+
   createProject() async {
     await _bottomSheetService.showModifyProjectBottomSheet(
       name: '',
@@ -48,9 +62,9 @@ class HomeViewModel extends CoreReactiveViewModel {
   }
 
   @override
-  FutureOr<void> initialise() {
-    if (tasks.isEmpty) _taskBoardService.fetchTasks();
-    if (projects.isEmpty) _projectsService.fetchProjects();
+  FutureOr<void> initialise() async {
+    if (projects.isEmpty) await _projectsService.fetchProjects();
+    if (tasks.isEmpty) await _taskBoardService.fetchTasks();
     return super.initialise();
   }
 

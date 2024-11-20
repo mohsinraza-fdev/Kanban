@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:kanban_app/database/hive_service.dart';
+import 'package:kanban_app/features/dashboard/modules/home/home_view_model.dart';
+import 'package:kanban_app/features/dashboard/modules/settings/settings_view_model.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/repository/task_board_repo.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/repository/task_board_repo_impl.dart';
+import 'package:kanban_app/features/dashboard/modules/task_board/task_board_view_model.dart';
+import 'package:kanban_app/features/dashboard/modules/time_tracker/time_tracker_view_model.dart';
 import 'package:kanban_app/features/projects/projects_service.dart';
 import 'package:kanban_app/features/projects/repository/projects_repo.dart';
 import 'package:kanban_app/features/projects/repository/projects_repo_impl.dart';
@@ -34,4 +38,10 @@ void setupServiceLocator() {
   // Overlays
   locator.registerLazySingleton(() => AppBottomSheetService());
   locator.registerLazySingleton(() => AppSnackbarService());
+
+  // ViewModels
+  locator.registerLazySingleton(() => HomeViewModel());
+  locator.registerLazySingleton(() => TaskBoardViewModel());
+  locator.registerLazySingleton(() => TimeTrackerViewModel());
+  locator.registerLazySingleton(() => SettingsViewModel());
 }

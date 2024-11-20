@@ -26,7 +26,6 @@ class SelectTaskStatusViewModel extends CoreViewModel {
     final taskDetail = _taskBoardService.getDetailFromTask(selectedTask!);
     if (status == taskDetail.status) return;
     await _taskBoardService.updateTaskStatus(task: selectedTask!, status: status);
-    selectedStatus = status;
-    notifyListeners();
+    _navigator.back(result: status);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kanban_app/app/service_locator.dart';
 import 'package:kanban_app/core/view_models/core_view.dart';
 import 'package:kanban_app/features/dashboard/modules/settings/settings_view_model.dart';
 import 'package:kanban_app/features/dashboard/modules/settings/widgets/radio_button_tile.dart';
@@ -89,7 +90,13 @@ class SettingsView extends CoreView<SettingsViewModel> {
   }
 
   @override
+  bool get disposeViewModel => false;
+
+  @override
+  bool get fireOnViewModelReadyOnce => true;
+
+  @override
   SettingsViewModel viewModelBuilder(BuildContext context) {
-    return SettingsViewModel();
+    return locator<SettingsViewModel>();
   }
 }

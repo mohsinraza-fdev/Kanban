@@ -87,7 +87,7 @@ class AppTheme {
       surfaceSecondary: const Color(0xFF35435A),
       border: const Color(0xFF36445B),
       inProgress: const Color(0xFFFFC904),
-      done: const Color(0xFF00F85F),
+      done: const Color.fromARGB(255, 0, 218, 84),
       success: const Color(0xFF00F85F),
       critical: const Color(0xFFE11D48),
     );
