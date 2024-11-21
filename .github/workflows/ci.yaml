@@ -32,7 +32,7 @@ jobs:
         github-token: ${{ secrets.ACTION_TOKEN }}
         script: |
           // Disable the merge button
-          github.rest.checks.create({
+          await github.rest.checks.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
             name: 'CI',
@@ -45,9 +45,9 @@ jobs:
             }
           })
           
-          // Check the test result
-          if (${{ failure() }}) {
-            github.rest.checks.update({
+          // Update the check result
+          if (context.payload.check_run.conclusion === 'failure') {
+            await github.rest.checks.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               check_run_id: context.payload.check_run.id,
@@ -59,7 +59,7 @@ jobs:
               }
             })
           } else {
-            github.rest.checks.update({
+            await github.rest.checks.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               check_run_id: context.payload.check_run.id,
