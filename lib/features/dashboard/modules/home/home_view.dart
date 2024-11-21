@@ -25,7 +25,7 @@ class HomeView extends CoreView<HomeViewModel> {
         return AppStrings.appName;
       }
       if (viewModel.selectedProject == null) {
-        'Create Project';
+        return AppStrings.createProject;
       }
       return viewModel.selectedProject!.name;
     }
@@ -41,7 +41,7 @@ class HomeView extends CoreView<HomeViewModel> {
                 if (viewModel.projects.isNotEmpty)
                   AppButton.outline(
                     size: AppButtonSize.small,
-                    label: 'My Projects',
+                    label: AppStrings.myProjects,
                     onTap: viewModel.navigateToProjectsView,
                   ),
               ],
@@ -54,7 +54,7 @@ class HomeView extends CoreView<HomeViewModel> {
                     ? Center(
                         child: AppButton.primary(
                           size: AppButtonSize.medium,
-                          label: 'Create Project',
+                          label: AppStrings.createProject,
                           onTap: viewModel.createProject,
                         ),
                       )
@@ -90,7 +90,7 @@ class HomeView extends CoreView<HomeViewModel> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'Total Tasks',
+                                          AppStrings.totalTasks,
                                           style: AppTextStyles.m20(AppTheme.colors(context).text),
                                         ),
                                       ),
@@ -107,7 +107,7 @@ class HomeView extends CoreView<HomeViewModel> {
 
                                 // Tasks Summary
                                 Text(
-                                  'Task Board Summary',
+                                  AppStrings.taskBoardSummary,
                                   style: AppTextStyles.m16(AppTheme.colors(context).text),
                                 ),
                                 const SizedBox(height: 16),
@@ -132,7 +132,7 @@ class HomeView extends CoreView<HomeViewModel> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: AppButton.primary(
                                               size: AppButtonSize.medium,
-                                              label: 'Add Task',
+                                              label: AppStrings.addTask,
                                               leading: const Icon(
                                                 Icons.add,
                                                 size: 20,
