@@ -43,6 +43,10 @@ class HomeViewModel extends CoreReactiveViewModel {
     _bottomSheetService.showModifyTaskBottomSheet(context!);
   }
 
+  updateTask(Task task) {
+    _bottomSheetService.showModifyTaskBottomSheet(context!, task: task);
+  }
+
   createProject() async {
     await _bottomSheetService.showModifyProjectBottomSheet(
       name: '',
