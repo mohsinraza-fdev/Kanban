@@ -6,7 +6,6 @@ on:
       - main
 
 jobs:
-
   test:
     name: Run Flutter Tests
     runs-on: ubuntu-latest
