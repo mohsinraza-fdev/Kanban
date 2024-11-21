@@ -8,7 +8,7 @@ class SettingsViewModel extends CoreViewModel {
   final themeService = locator<ThemeService>();
 
   ThemeManagerMode get currentTheme => themeService.selectedThemeMode;
-  setThemeMode(ThemeManagerMode mode) {
+  void setThemeMode(ThemeManagerMode mode) {
     themeService.setThemeMode(mode);
   }
 

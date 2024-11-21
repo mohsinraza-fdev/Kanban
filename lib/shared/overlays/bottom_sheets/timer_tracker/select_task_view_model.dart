@@ -4,7 +4,7 @@ import 'package:kanban_app/features/dashboard/modules/task_board/enums/task_stat
 import 'package:kanban_app/features/dashboard/modules/task_board/repository/models/task.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/repository/models/task_detail.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/task_board_service.dart';
-import 'package:stacked/src/mixins/listenable_service_mixin.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SelectTaskViewModel extends CoreReactiveViewModel {

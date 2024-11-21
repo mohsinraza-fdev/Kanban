@@ -9,6 +9,7 @@ class DashboardViewModel extends CoreReactiveViewModel {
 
   int selectedIndex = 0;
   setIndex(int value) {
+    if (value == selectedIndex) return;
     selectedIndex = value;
     notifyListeners();
   }
