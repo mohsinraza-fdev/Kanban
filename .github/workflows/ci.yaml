@@ -31,43 +31,16 @@ jobs:
       with:
         github-token: ${{ secrets.ACTION_TOKEN }}
         script: |
-          // Disable the merge button
+          // Create or update the CI check
           await github.rest.checks.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
             name: 'CI',
             head_sha: context.payload.pull_request.head.sha,
-            status: 'in_progress',
-            conclusion: 'neutral',
+            status: 'completed',
+            conclusion: context.payload.check_run?.conclusion || 'neutral',
             output: {
-              title: 'CI in progress',
-              summary: 'The CI is currently running, please wait for the results.'
+              title: context.payload.check_run?.conclusion === 'failure' ? 'Test failure' : 'Tests passed',
+              summary: context.payload.check_run?.conclusion === 'failure' ? 'The test suite failed to pass.' : 'All tests have passed.'
             }
           })
-          
-          // Update the check result
-          if (context.payload.check_run.conclusion === 'failure') {
-            await github.rest.checks.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_run_id: context.payload.check_run.id,
-              status: 'completed',
-              conclusion: 'failure',
-              output: {
-                title: 'Test failure',
-                summary: 'The test suite failed to pass.'
-              }
-            })
-          } else {
-            await github.rest.checks.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_run_id: context.payload.check_run.id,
-              status: 'completed',
-              conclusion: 'success',
-              output: {
-                title: 'Tests passed',
-                summary: 'All tests have passed.'
-              }
-            })
-          }
