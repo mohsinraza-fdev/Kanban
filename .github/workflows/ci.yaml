@@ -6,41 +6,21 @@ on:
       - main
 
 jobs:
-
   test:
     name: Run Flutter Tests
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.24.5'
-        channel: 'stable'
+      - uses: actions/checkout@v4
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: 'stable'
+          
+      - name: Install dependencies
+        run: flutter pub get
         
-    - name: Install dependencies
-      run: flutter pub get
-      
-    - name: Run tests
-      run: flutter test --coverage
-      
-    - name: Set pull request status
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.ACTION_TOKEN }}
-        script: |
-          // Create or update the CI check
-          await github.rest.checks.create({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            name: 'CI',
-            head_sha: context.payload.pull_request.head.sha,
-            status: 'completed',
-            conclusion: context.payload.check_run?.conclusion || 'neutral',
-            output: {
-              title: context.payload.check_run?.conclusion === 'failure' ? 'Test failure' : 'Tests passed',
-              summary: context.payload.check_run?.conclusion === 'failure' ? 'The test suite failed to pass.' : 'All tests have passed.'
-            }
-          })
+      - name: Run tests
+        run: flutter test --coverage
