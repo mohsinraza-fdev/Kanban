@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+
   test:
     name: Run Flutter Tests
     runs-on: ubuntu-latest
@@ -30,33 +31,19 @@ jobs:
       with:
         github-token: ${{ secrets.ACTION_TOKEN }}
         script: |
-          if (${{ failure() }}) {
-            github.rest.pulls.updateBranch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            })
-            github.rest.checks.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_run_id: context.payload.check_run.id,
-              status: 'failed',
-              conclusion: 'failure',
-              output: {
-                title: 'Test failure',
-                summary: 'The test suite failed to pass.'
-              }
-            })
-          } else {
-            github.rest.checks.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_run_id: context.payload.check_run.id,
-              status: 'success',
-              conclusion: 'success',
-              output: {
-                title: 'Tests passed',
-                summary: 'All tests have passed.'
-              }
-            })
-          }
+          github.rest.pulls.updateBranch({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          })
+          github.rest.checks.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            check_run_id: context.payload.check_run.id,
+            status: 'failed',
+            conclusion: 'failure',
+            output: {
+              title: 'Test failure',
+              summary: 'The test suite failed to pass.'
+            }
+          })
