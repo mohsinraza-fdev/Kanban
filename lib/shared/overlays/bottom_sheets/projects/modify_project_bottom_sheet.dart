@@ -21,9 +21,11 @@ class ModifyProjectBottomSheet extends StatefulWidget {
 }
 
 class _ModifyProjectBottomSheetState extends State<ModifyProjectBottomSheet> {
-  bool isLoading = false;
   late final controller = TextEditingController(text: widget.name);
   final focusNode = FocusNode();
+
+  bool isLoading = false;
+  bool get isPromaryButtonEnabled => controller.text.isNotEmpty;
 
   _confirm(BuildContext context) async {
     setState(() {
@@ -56,7 +58,9 @@ class _ModifyProjectBottomSheetState extends State<ModifyProjectBottomSheet> {
       child: Container(
         decoration: BoxDecoration(
           color: AppTheme.colors(context).surface,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(12),
+          ),
           border: Border.all(
             width: 1,
             color: AppTheme.colors(context).border,
@@ -92,6 +96,7 @@ class _ModifyProjectBottomSheetState extends State<ModifyProjectBottomSheet> {
                 controller: controller,
                 focusNode: focusNode,
                 hint: 'Enter project name',
+                onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: 20),
               AppButton.primary(
@@ -99,6 +104,7 @@ class _ModifyProjectBottomSheetState extends State<ModifyProjectBottomSheet> {
                 width: double.maxFinite,
                 label: widget.id == null ? 'Create' : 'Update',
                 isLoading: isLoading,
+                isDisabled: !isPromaryButtonEnabled,
                 onTap: () => _confirm(context),
               ),
               SizedBox(height: isKeyboardOpen(context) ? 24 : 40),

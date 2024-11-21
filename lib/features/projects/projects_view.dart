@@ -88,7 +88,7 @@ class ProjectsView extends CoreView<ProjectsViewModel> {
                                       child: Icon(
                                         Icons.delete,
                                         size: 20,
-                                        color: AppTheme.colors(context).secondary,
+                                        color: isSelected ? AppColors.white : AppTheme.colors(context).text,
                                       ),
                                     ),
                                   ],

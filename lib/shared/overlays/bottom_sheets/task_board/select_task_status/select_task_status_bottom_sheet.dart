@@ -24,7 +24,9 @@ class SelectTaskStatusBottomSheet extends CoreView<SelectTaskStatusViewModel> {
       child: Container(
         decoration: BoxDecoration(
           color: AppTheme.colors(context).surface,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(12),
+          ),
           border: Border.all(
             width: 1,
             color: AppTheme.colors(context).border,
