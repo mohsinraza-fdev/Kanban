@@ -73,4 +73,10 @@ class TimeTrackerViewModel extends CoreReactiveViewModel {
     _taskBoardService.fetchTasks();
     return super.initialise();
   }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 }

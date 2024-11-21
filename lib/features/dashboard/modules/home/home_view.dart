@@ -5,6 +5,7 @@ import 'package:kanban_app/core/view_models/core_view.dart';
 import 'package:kanban_app/features/dashboard/modules/home/home_view_model.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/enums/task_status.dart';
 import 'package:kanban_app/features/dashboard/modules/task_board/widgets/task_card.dart';
+import 'package:kanban_app/shared/constants/app_strings.dart';
 import 'package:kanban_app/shared/theme/app_colors.dart';
 import 'package:kanban_app/shared/theme/app_text_styles.dart';
 import 'package:kanban_app/shared/theme/app_theme.dart';
@@ -21,7 +22,7 @@ class HomeView extends CoreView<HomeViewModel> {
   Widget buildView(BuildContext context, HomeViewModel viewModel, Widget? child) {
     String title() {
       if (viewModel.isBusyFetchingProjects && viewModel.projects.isEmpty) {
-        return 'Kanban';
+        return AppStrings.appName;
       }
       if (viewModel.selectedProject == null) {
         'Create Project';

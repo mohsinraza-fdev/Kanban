@@ -54,6 +54,20 @@ class TaskBoardService with ListenableServiceMixin {
       _taskDetails =
           (taskDetails as List<TaskDetail>).where((detail) => detail.projectId == selectedProject?.id).toList();
 
+      final tasksWithMissingDetails = _tasks.where((task) {
+        return !_taskDetails.map((detail) => detail.id).contains(task.id);
+      });
+
+      _taskDetails.addAll(tasksWithMissingDetails.map((task) {
+        return TaskDetail(
+          id: task.id,
+          projectId: task.projectId,
+          status: TaskStatus.open,
+          durationInSeconds: 0,
+          updatedAt: DateTime.now(),
+        );
+      }));
+
       _tasks.sort((a, b) => getDetailFromTask(b).updatedAt.compareTo(getDetailFromTask(a).updatedAt));
     } catch (e) {
       if (e is! CancelledRequestException) {

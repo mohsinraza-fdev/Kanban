@@ -16,12 +16,16 @@ import 'package:kanban_app/shared/overlays/bottom_sheets/app_bottom_sheet_servic
 import 'package:kanban_app/shared/overlays/snackbars/app_snackbar_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mockito/annotations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
 import 'test_helpers.mocks.dart';
 
 @GenerateMocks([], customMocks: [
+  MockSpec<BuildContext>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<SharedPreferences>(onMissingStub: OnMissingStub.returnDefault),
+
   // Services
   MockSpec<ApiClientKanban>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<PreferenceService>(onMissingStub: OnMissingStub.returnDefault),
