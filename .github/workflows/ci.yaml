@@ -31,19 +31,43 @@ jobs:
       with:
         github-token: ${{ secrets.ACTION_TOKEN }}
         script: |
-          github.rest.pulls.updateBranch({
+          // Disable the merge button
+          github.rest.checks.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            pull_number: context.issue.number
-          })
-          github.rest.checks.update({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            check_run_id: context.payload.check_run.id,
-            status: 'failed',
-            conclusion: 'failure',
+            name: 'CI',
+            head_sha: context.payload.pull_request.head.sha,
+            status: 'in_progress',
+            conclusion: 'neutral',
             output: {
-              title: 'Test failure',
-              summary: 'The test suite failed to pass.'
+              title: 'CI in progress',
+              summary: 'The CI is currently running, please wait for the results.'
             }
           })
+          
+          // Check the test result
+          if (${{ failure() }}) {
+            github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: context.payload.check_run.id,
+              status: 'completed',
+              conclusion: 'failure',
+              output: {
+                title: 'Test failure',
+                summary: 'The test suite failed to pass.'
+              }
+            })
+          } else {
+            github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: context.payload.check_run.id,
+              status: 'completed',
+              conclusion: 'success',
+              output: {
+                title: 'Tests passed',
+                summary: 'All tests have passed.'
+              }
+            })
+          }
