@@ -223,6 +223,7 @@ class HomeView extends CoreView<HomeViewModel> {
                                         (task) => TaskCard(
                                           task: task,
                                           taskDetail: viewModel.getDetailFromTask(task),
+                                          onTap: () => viewModel.updateTask(task),
                                         ),
                                       ),
                               ],
