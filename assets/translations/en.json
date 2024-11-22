@@ -1,3 +1,10 @@
 {
-    "app_name": "Kanban"
+    "app_name": "Kanban",
+
+    "create_project": "Create Project",
+    "my_projects": "My Projects",
+    "total_tasks": "Total Tasks",
+    "task_board_summary": "Task Board Summary",
+    "add_task": "Add Task",
+    "completed_tasks": "Completed Tasks"
 }
